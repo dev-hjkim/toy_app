@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "./join_email2.dart";
+import "../login/login.dart";
 
 class JoinEmail1 extends StatelessWidget {
   @override
@@ -41,14 +42,22 @@ class JoinEmail1 extends StatelessWidget {
                                     },
                                   )
                               ),
-                              const Padding(
+                              Padding(
                                   padding: EdgeInsets.all(13.7),
-                                  child: Text(
-                                    "로그인",
-                                    style: TextStyle(
-                                      color: Color(0xff6D00B0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Login()),
+                                      );
+                                    },
+                                    child: Text(
+                                      "로그인",
+                                      style: TextStyle(
+                                        color: Color(0xff6D00B0),
+                                      ),
                                     ),
-                                  )
+                                  ),
                               ),
                               const Padding(
                                   padding: EdgeInsets.all(13),

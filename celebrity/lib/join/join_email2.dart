@@ -1,9 +1,23 @@
 import "package:flutter/material.dart";
 
-class JoinEmail2 extends StatelessWidget {
+class JoinEmail2 extends StatefulWidget {
+  const JoinEmail2({Key? key}) : super(key: key);
+
+  @override
+  _JoinEmail2State createState() => _JoinEmail2State();
+}
+
+class _JoinEmail2State extends State<JoinEmail2> {
+  late TextEditingController email;
+
+  @override
+  void initState() {
+    email = TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = new TextEditingController();
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Scaffold(
@@ -42,11 +56,12 @@ class JoinEmail2 extends StatelessWidget {
                                                 hintText: "이메일을 입력해주세요.",
                                                 suffixIcon: IconButton(
                                                     onPressed: () {
-                                                      _controller.clear();
+                                                      email.clear();
                                                     },
                                                     icon: Icon(Icons.cancel, color: Colors.grey)
                                                 )
                                             ),
+                                            controller: email,
                                           ),
                                           Align(
                                             alignment: Alignment.centerRight,
