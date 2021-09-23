@@ -9,10 +9,15 @@ class JoinEmail2 extends StatefulWidget {
 
 class _JoinEmail2State extends State<JoinEmail2> {
   late TextEditingController email;
+  late TextEditingController code;
+
+  bool showCode = false;
+  bool showNickname = false;
 
   @override
   void initState() {
     email = TextEditingController();
+    code = TextEditingController();
     super.initState();
   }
 
@@ -65,22 +70,77 @@ class _JoinEmail2State extends State<JoinEmail2> {
                                           ),
                                           Align(
                                             alignment: Alignment.centerRight,
-                                            child: OutlineButton(
+                                            child: RaisedButton(
                                               child: Text(
                                                   "인증하기",
                                                   style: TextStyle(
-                                                      color: Color(0xff6D00B0)
+                                                      color: showCode ? Colors.white : Color(0xff6D00B0),
                                                   )
                                               ),
-                                              color: Colors.white,
-                                              borderSide: BorderSide(color: Color(0xff6D00B0), width: 1),
-                                              onPressed: () => { },
+                                              color: showCode ? Color(0xff6D00B0) : Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10.0),
+                                                  side: BorderSide(color: showCode ? Colors.white : Color(0xff6D00B0), width: 1)),
+                                              onPressed: () => {
+                                                setState(() {
+                                                  showCode = true;
+                                                })
+                                              },
                                             ),
                                           ),
                                         ]
                                     )
                                 )
                             ),
+                            Visibility(
+                              visible: showCode,
+                              child: Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: Container(
+                                      child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text("인증코드"),
+                                            ),
+                                            Padding(padding: EdgeInsets.all(5)),
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                  hintText: "인증코드를 입력해주세요.",
+                                                  suffixIcon: IconButton(
+                                                      onPressed: () {
+                                                        code.clear();
+                                                      },
+                                                      icon: Icon(Icons.cancel, color: Colors.grey)
+                                                  )
+                                              ),
+                                              controller: code,
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerRight,
+                                              child: RaisedButton(
+                                                child: Text(
+                                                    "인증하기",
+                                                    style: TextStyle(
+                                                      color: showNickname ? Colors.white : Color(0xff6D00B0),
+                                                    )
+                                                ),
+                                                color: showNickname ? Color(0xff6D00B0) : Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(10.0),
+                                                    side: BorderSide(color: showNickname ? Colors.white : Color(0xff6D00B0), width: 1)),
+                                                onPressed: () => {
+                                                  setState(() {
+                                                    showNickname = true;
+                                                  })
+                                                },
+                                              ),
+                                            ),
+                                          ]
+                                      )
+                                  )
+                              ),
+                            )
                           ])
                       )
                   )
