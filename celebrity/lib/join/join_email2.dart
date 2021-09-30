@@ -36,7 +36,8 @@ class _JoinEmail2State extends State<JoinEmail2> {
             title: Center(
                 child: Text("이메일로 가입할 수 있어요!",
                     style: TextStyle(color: Colors.black),
-                    textAlign: TextAlign.center)),
+                    textAlign: TextAlign.center)
+            ),
             leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -49,71 +50,83 @@ class _JoinEmail2State extends State<JoinEmail2> {
           ),
           body: Builder(
               builder: (context) => SingleChildScrollView(
-                      child: Center(
-                          child: Column(children: [
-                    Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Container(
-                            child: Column(children: [
-                          Container(
-                              color: Color(0xffF4F4F4),
-                              child: Column(children: [
-                                TextField(
-                                  decoration: InputDecoration(
-                                      hintText: "이메일을 입력해주시겠어요?",
-                                      suffixIcon: IconButton(
-                                          onPressed: () {
-                                            email.clear();
-                                          },
-                                          icon: Icon(Icons.cancel,
-                                              color: Colors.grey))),
-                                  controller: email,
-                                ),
-                              ])),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(data["message"] ?? "",
-                                style: TextStyle(color: Color(0xff6D00B0))),
-                          ),
-                          Visibility(
-                            visible: showCode,
+                  child: Center(
+                      child: Column(children: [
+                        Padding(
+                            padding: EdgeInsets.all(20),
                             child: Container(
-                                color: Color(0xffF4F4F4),
-                                child: Column(children: [
-                                  TextField(
-                                    decoration: InputDecoration(
-                                        hintText: "인증코드를 입력해주세요!",
-                                        suffixIcon: IconButton(
-                                            onPressed: () {
-                                              code.clear();
+                                child: Column(
+                                    children: [
+                                      Container(
+                                          color: Color(0xffF4F4F4),
+                                          child: Column(children: [
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                  hintText: "이메일을 입력해주시겠어요?",
+                                                  suffixIcon: IconButton(
+                                                      onPressed: () {
+                                                        email.clear();
+                                                        },
+                                                      icon: Icon(Icons.cancel, color: Colors.grey)
+                                                  )
+                                              ),
+                                              controller: email,
+                                            ),
+                                          ])
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(data["message"] ?? "",
+                                            style: TextStyle(color: Color(0xff6D00B0))),
+                                      ),
+                                      Visibility(
+                                        visible: showCode,
+                                        child: Container(
+                                            color: Color(0xffF4F4F4),
+                                            child: Column(children: [
+                                              TextField(
+                                                decoration: InputDecoration(
+                                                    hintText: "인증코드를 입력해주세요!",
+                                                    suffixIcon: IconButton(
+                                                        onPressed: () {
+                                                          code.clear();
+                                                          },
+                                                        icon: Icon(Icons.cancel, color: Colors.grey)
+                                                    )
+                                                ),
+                                                controller: code,
+                                              ),
+                                            ])
+                                        ),
+                                      ),
+                                      Row(children: [
+                                        Expanded(
+                                          child: RaisedButton(
+                                            child: Text("다음",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                )
+                                            ),
+                                            color: Color(0xffC192DE),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                            ),
+                                            onPressed: () => {
+                                              setState(() {
+                                                sendMail(email.text);
+                                              })
                                             },
-                                            icon: Icon(Icons.cancel,
-                                                color: Colors.grey))),
-                                    controller: code,
-                                  ),
-                                ])),
-                          ),
-                          Row(children: [
-                            Expanded(
-                              child: RaisedButton(
-                                child: Text("다음",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    )),
-                                color: Color(0xffC192DE),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                onPressed: () => {
-                                  setState(() {
-                                    sendMail(email.text);
-                                  })
-                                },
-                              ),
+                                          ),
+                                        )
+                                      ]),
+                                    ])
                             )
-                          ]),
-                        ]))),
-                  ])))));
+                        ),
+                      ])
+                  )
+              )
+          )
+      );
     });
   }
 
