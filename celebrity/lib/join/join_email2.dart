@@ -16,6 +16,10 @@ class _JoinEmail2State extends State<JoinEmail2> {
   late Map<String, dynamic> data;
 
   bool showCode = false;
+  bool btnActive = false;
+
+  late FocusNode focusNode;
+  bool _hasEmailError = false;
 
   @override
   void initState() {
@@ -24,6 +28,22 @@ class _JoinEmail2State extends State<JoinEmail2> {
     httpUtil = HttpUtil();
     data = {};
     showCode = false;
+
+    focusNode = new FocusNode();
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {
+        setState(() {
+          bool emailValid = RegExp(
+                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              .hasMatch(email.text);
+          if (!emailValid) {
+            _hasEmailError = true;
+          } else {
+            btnActive = true;
+          }
+        });
+      }
+    });
     super.initState();
   }
 
@@ -31,44 +51,47 @@ class _JoinEmail2State extends State<JoinEmail2> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      return Scaffold(
-          appBar: AppBar(
-            title: Center(
-                child: Text("이메일로 가입할 수 있어요!",
-                    style: TextStyle(color: Colors.black),
-                    textAlign: TextAlign.center)
-            ),
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              color: Colors.black,
-              icon: Icon(Icons.arrow_back_ios_sharp),
-            ),
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-          ),
-          body: Builder(
-              builder: (context) => SingleChildScrollView(
-                  child: Center(
-                      child: Column(children: [
-                        Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Container(
-                                child: Column(
-                                    children: [
+          return Scaffold(
+              appBar: AppBar(
+                title: Center(
+                    child: Text("이메일로 가입할 수 있어요!",
+                        style: TextStyle(color: Colors.black),
+                        textAlign: TextAlign.center)
+                ),
+                leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    },
+                  color: Colors.black,
+                  icon: Icon(Icons.arrow_back_ios_sharp),
+                ),
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+              ),
+              body: Builder(
+                  builder: (context) => SingleChildScrollView(
+                      child: Center(
+                          child: Column(children: [
+                            Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Container(
+                                    child: Column(children: [
                                       Container(
                                           color: Color(0xffF4F4F4),
                                           child: Column(children: [
                                             TextField(
+                                              focusNode: focusNode,
                                               decoration: InputDecoration(
-                                                  hintText: "이메일을 입력해주시겠어요?",
-                                                  suffixIcon: IconButton(
-                                                      onPressed: () {
-                                                        email.clear();
-                                                        },
-                                                      icon: Icon(Icons.cancel, color: Colors.grey)
-                                                  )
+                                                hintText: "이메일을 입력해주시겠어요?",
+                                                suffixIcon: IconButton(
+                                                    onPressed: () {
+                                                      email.clear();
+                                                      },
+                                                    icon: Icon(Icons.cancel, color: Colors.grey)
+                                                ),
+                                                errorText: _hasEmailError
+                                                    ? "유효한 이메일 번호가 아닙니다."
+                                                    : "",
                                               ),
                                               controller: email,
                                             ),
@@ -105,9 +128,10 @@ class _JoinEmail2State extends State<JoinEmail2> {
                                             child: Text("다음",
                                                 style: TextStyle(
                                                   color: Colors.white,
-                                                )
-                                            ),
-                                            color: Color(0xffC192DE),
+                                                )),
+                                            color: btnActive
+                                                ? Color(0xff6D00B0)
+                                                : Color(0xffC192DE),
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10.0),
                                             ),
@@ -120,13 +144,13 @@ class _JoinEmail2State extends State<JoinEmail2> {
                                         )
                                       ]),
                                     ])
-                            )
-                        ),
-                      ])
+                                )
+                            ),
+                          ])
+                      )
                   )
               )
-          )
-      );
+          );
     });
   }
 
