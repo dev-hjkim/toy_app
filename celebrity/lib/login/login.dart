@@ -10,11 +10,13 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   late TextEditingController email;
   late TextEditingController password;
+  late bool _passwordVisible;
 
   @override
   void initState() {
     email = TextEditingController();
     password = TextEditingController();
+    _passwordVisible = false;
     super.initState();
   }
   @override
@@ -67,13 +69,20 @@ class _LoginState extends State<Login> {
                         ),
                         Padding(padding: EdgeInsets.all(5)),
                         TextField(
+                          obscureText: !_passwordVisible,
                           decoration: InputDecoration(
                               hintText: "비밀번호를 입력해주세요.",
                               suffixIcon: IconButton(
                                   onPressed: () {
-                                    password.clear();
+                                    setState(() {
+                                      _passwordVisible = !_passwordVisible;
+                                    });
                                   },
-                                  icon: Icon(Icons.visibility)
+                                  icon: Icon(
+                                    _passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  )
                               )
                           ),
                           controller: password,
