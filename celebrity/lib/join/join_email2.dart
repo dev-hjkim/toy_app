@@ -19,7 +19,7 @@ class _JoinEmail2State extends State<JoinEmail2> {
   bool btnActive = false;
 
   late FocusNode focusNode;
-  bool _hasEmailError = false;
+  late FocusNode codeFocusNode;
 
   @override
   void initState() {
@@ -38,7 +38,23 @@ class _JoinEmail2State extends State<JoinEmail2> {
                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
               .hasMatch(email.text);
           if (!emailValid) {
-            _hasEmailError = true;
+            btnActive = false;
+            data["message"] = "올바른 이메일 형식이 아닙니다.";
+          } else {
+            btnActive = true;
+            data["message"] = "";
+          }
+        });
+      }
+    });
+
+    codeFocusNode = new FocusNode();
+    codeFocusNode.addListener(() {
+      if (!codeFocusNode.hasFocus) {
+        setState(() {
+          bool codeValid = code.text.length == 10;
+          if (!codeValid) {
+            btnActive = false;
           } else {
             btnActive = true;
           }
@@ -54,7 +70,7 @@ class _JoinEmail2State extends State<JoinEmail2> {
         builder: (BuildContext context, BoxConstraints constraints) {
           return Scaffold(
               appBar: AppBar(
-                title: Center(
+                title: const Center(
                     child: Text("이메일로 가입할 수 있어요!",
                         style: TextStyle(color: Colors.black),
                         textAlign: TextAlign.center)
@@ -73,81 +89,86 @@ class _JoinEmail2State extends State<JoinEmail2> {
                   builder: (context) => SingleChildScrollView(
                       child: Center(
                           child: Column(children: [
-                            Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Container(
+                            Container(
+                              margin: EdgeInsets.all(16),
+                              child: Column(children: [
+                                Container(
+                                    color: Color(0xffF4F4F4),
                                     child: Column(children: [
-                                      Container(
-                                          color: Color(0xffF4F4F4),
-                                          child: Column(children: [
-                                            TextField(
-                                              focusNode: focusNode,
-                                              decoration: InputDecoration(
-                                                hintText: "이메일을 입력해주시겠어요?",
-                                                suffixIcon: IconButton(
-                                                    onPressed: () {
-                                                      email.clear();
-                                                      },
-                                                    icon: Icon(Icons.cancel, color: Colors.grey)
-                                                ),
-                                                errorText: _hasEmailError
-                                                    ? "유효한 이메일 번호가 아닙니다."
-                                                    : "",
-                                              ),
-                                              controller: email,
-                                            ),
-                                          ])
-                                      ),
-                                      Padding(padding: EdgeInsets.all(8.44)),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(data["message"] ?? "",
-                                            style: TextStyle(color: Color(0xff6D00B0))),
-                                      ),
-                                      Visibility(
-                                        visible: showCode,
-                                        child: Container(
-                                            color: Color(0xffF4F4F4),
-                                            child: Column(children: [
-                                              TextField(
-                                                decoration: InputDecoration(
-                                                    hintText: "인증코드를 입력해주세요!",
-                                                    suffixIcon: IconButton(
-                                                        onPressed: () {
-                                                          code.clear();
-                                                          },
-                                                        icon: Icon(Icons.cancel, color: Colors.grey)
-                                                    )
-                                                ),
-                                                controller: code,
-                                              ),
-                                            ])
-                                        ),
-                                      ),
-                                      Row(children: [
-                                        Expanded(
-                                          child: RaisedButton(
-                                            child: Text("다음",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                )),
-                                            color: btnActive
-                                                ? Color(0xff6D00B0)
-                                                : Color(0xffC192DE),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10.0),
-                                            ),
-                                            onPressed: () => {
-                                              setState(() {
-                                                sendMail(email.text);
-                                              })
-                                            },
+                                      TextField(
+                                        focusNode: focusNode,
+                                        decoration: InputDecoration(
+                                          hintText: "이메일을 입력해주시겠어요?",
+                                          suffixIcon: IconButton(
+                                              onPressed: () {
+                                                email.clear();
+                                                },
+                                              icon: Icon(Icons.cancel, color: Colors.grey)
                                           ),
-                                        )
-                                      ]),
+                                        ),
+                                        controller: email,
+                                      ),
                                     ])
-                                )
-                            ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 8.44, bottom: 12.56),
+                                    child: Text(data["message"] ?? "",
+                                          style: TextStyle(color: Color(0xff6D00B0))),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: showCode,
+                                  child: Container(
+                                      margin: EdgeInsets.only(bottom: 35),
+                                      color: Color(0xffF4F4F4),
+                                      child: Column(children: [
+                                        TextField(
+                                          focusNode: codeFocusNode,
+                                          decoration: InputDecoration(
+                                              hintText: "인증코드를 입력해주세요!",
+                                              suffixIcon: IconButton(
+                                                  onPressed: () {
+                                                    code.clear();
+                                                    },
+                                                  icon: Icon(Icons.cancel, color: Colors.grey)
+                                              )
+                                          ),
+                                          controller: code,
+                                        ),
+                                      ])
+                                  ),
+                                ),
+                                Row(children: [
+                                  Expanded(
+                                    child: Container(
+                                      child: RaisedButton(
+                                        child: const Text("다음",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            )),
+                                        color: btnActive
+                                            ? const Color(0xff6D00B0)
+                                            : const Color(0xffC192DE),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                        ),
+                                        onPressed: () => {
+                                          setState(() {
+                                            if (!showCode) {
+                                              sendMail(email.text);
+                                            } else {
+                                              certCode(email.text, code.text);
+                                            }
+                                          })
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ]),
+                              ])
+                            )
                           ])
                       )
                   )
@@ -161,6 +182,15 @@ class _JoinEmail2State extends State<JoinEmail2> {
     setState(() {
       data = data;
       showCode = data["success"];
+      btnActive = false;
+    });
+  }
+
+  Future certCode(email, code) async {
+    data = await httpUtil.validateCode(email, code);
+    setState(() {
+      data = data;
+      print(data);
     });
   }
 }

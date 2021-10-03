@@ -29,4 +29,25 @@ class HttpUtil {
       return {};
     }
   }
+
+  Future<Map<String, dynamic>> validateCode(String email, String code) async {
+    final String validateCode = urlBase + "/validate/mail/cert";
+
+    Map<String, String> resBody = {"username": email, "certCode": code};
+
+    http.Response result = await http.post(
+      Uri.parse(validateCode),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: jsonEncode(resBody),
+    );
+
+    if (result.statusCode == HttpStatus.ok) {
+      final jsonResponse = json.decode(utf8.decode(result.bodyBytes));
+      return jsonResponse;
+    } else {
+      return {};
+    }
+  }
 }
