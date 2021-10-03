@@ -28,6 +28,7 @@ class _JoinEmail2State extends State<JoinEmail2> {
     httpUtil = HttpUtil();
     data = {};
     showCode = false;
+    btnActive = false;
 
     focusNode = new FocusNode();
     focusNode.addListener(() {
@@ -73,7 +74,7 @@ class _JoinEmail2State extends State<JoinEmail2> {
                       child: Center(
                           child: Column(children: [
                             Padding(
-                                padding: EdgeInsets.all(20),
+                                padding: EdgeInsets.all(16),
                                 child: Container(
                                     child: Column(children: [
                                       Container(
@@ -97,6 +98,7 @@ class _JoinEmail2State extends State<JoinEmail2> {
                                             ),
                                           ])
                                       ),
+                                      Padding(padding: EdgeInsets.all(8.44)),
                                       Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(data["message"] ?? "",
