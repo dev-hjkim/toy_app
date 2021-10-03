@@ -70,11 +70,10 @@ class _JoinEmail2State extends State<JoinEmail2> {
         builder: (BuildContext context, BoxConstraints constraints) {
           return Scaffold(
               appBar: AppBar(
-                title: const Center(
-                    child: Text("이메일로 가입할 수 있어요!",
-                        style: TextStyle(color: Colors.black),
-                        textAlign: TextAlign.center)
-                ),
+                title: Text("이메일로 가입할 수 있어요!",
+                    style: TextStyle(color: Colors.black),
+                    textAlign: TextAlign.center),
+                centerTitle: true,
                 leading: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
