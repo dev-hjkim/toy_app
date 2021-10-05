@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "../utils/http_util.dart";
+import 'join_email3.dart';
 
 class JoinEmail2 extends StatefulWidget {
   const JoinEmail2({Key? key}) : super(key: key);
@@ -159,6 +160,13 @@ class _JoinEmail2State extends State<JoinEmail2> {
                                               sendMail(email.text);
                                             } else {
                                               certCode(email.text, code.text);
+
+                                              if (data["success"]) {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (context) => JoinEmail3()),
+                                                );
+                                              }
                                             }
                                           })
                                         },
@@ -189,7 +197,6 @@ class _JoinEmail2State extends State<JoinEmail2> {
     data = await httpUtil.validateCode(email, code);
     setState(() {
       data = data;
-      print(data);
     });
   }
 }

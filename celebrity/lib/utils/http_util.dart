@@ -46,4 +46,25 @@ class HttpUtil {
       return {};
     }
   }
+
+  Future<Map<String, dynamic>> validateNickname(String nickname) async {
+    final String validateCode = urlBase + "/validate/nickname";
+
+    Map<String, String> resBody = {"nickname": nickname};
+
+    http.Response result = await http.post(
+      Uri.parse(validateCode),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: jsonEncode(resBody),
+    );
+
+    if (result.statusCode == HttpStatus.ok) {
+      final jsonResponse = json.decode(utf8.decode(result.bodyBytes));
+      return jsonResponse;
+    } else {
+      return {};
+    }
+  }
 }
