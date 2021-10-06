@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import "../utils/http_util.dart";
+import 'package:scroll_date_picker/scroll_date_picker.dart';
+import 'package:intl/intl.dart';
 
 class JoinEmail4 extends StatefulWidget {
   const JoinEmail4({Key? key}) : super(key: key);
@@ -17,7 +19,12 @@ class _JoinEmail4State extends State<JoinEmail4> {
 
   bool btnActive = false;
 
-  late FocusNode birthDtFocusNode;
+  int genderCode = 0;
+  bool genderComleted = false;
+  bool birthDtCompleted = false;
+
+  late DatePickerController controller;
+  DateTime _selectedDate = DateTime.now();
 
   @override
   void initState() {
@@ -25,16 +32,20 @@ class _JoinEmail4State extends State<JoinEmail4> {
     birthDt = TextEditingController();
     httpUtil = HttpUtil();
     data = {};
-    btnActive = false;
 
+    controller = DatePickerController(
+      initialDateTime: _selectedDate,
+      minYear: 1950,
+      maxYear: 2021,
+    );
 
-    birthDtFocusNode = new FocusNode();
-    birthDtFocusNode.addListener(() {
-      if (birthDtFocusNode.hasFocus) {
-
-      }
-    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -64,6 +75,7 @@ class _JoinEmail4State extends State<JoinEmail4> {
                                     color: Color(0xffF4F4F4),
                                     child: Column(children: [
                                       TextField(
+                                        readOnly: true,
                                         decoration: InputDecoration(
                                           hintText: "성별을 선택해주세요",
                                           suffixIcon: IconButton(
@@ -75,31 +87,98 @@ class _JoinEmail4State extends State<JoinEmail4> {
                                                       print(MediaQuery.of(context).viewInsets.bottom);
                                                       return SingleChildScrollView(
                                                           child: Container(
-                                                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                                            height: 543,
+                                                            padding: EdgeInsets.only(
+                                                                bottom: MediaQuery.of(context).viewInsets.bottom,
+                                                              top: 71
+                                                            ),
                                                             child: Column(children: [
-                                                              Text("성별"),
-                                                              Row(children: [
-                                                                RaisedButton(
-                                                                    child: const Text("남성",
-                                                                        style: TextStyle(
-                                                                          color: Color(0xff494846),
-                                                                        )
-                                                                    ),
-                                                                    color: Colors.white,
-                                                                    shape: RoundedRectangleBorder(
-                                                                      borderRadius: BorderRadius.circular(16),
-                                                                    ),
-                                                                    onPressed: () => {
-                                                                      setState(() {
-                                                                        gender.text = "남성";
-                                                                        // Navigator.push(
-                                                                        //   context,
-                                                                        //   MaterialPageRoute(builder: (context) => JoinEmail4()),
-                                                                        // );
-                                                                      })
-                                                                    }
+                                                              Container(
+                                                                margin: EdgeInsets.only(left: 34),
+                                                                child: Align(
+                                                                  alignment: Alignment.centerLeft,
+                                                                  child: Text("성별"),
                                                                 ),
-                                                              ])
+                                                              ),
+                                                              Container(
+                                                                margin: EdgeInsets.only(top: 27, left: 34),
+                                                                child: Row(children: [
+                                                                  ButtonTheme(
+                                                                    minWidth: 48,
+                                                                    height: 34,
+                                                                    child: RaisedButton(
+                                                                        child: Text("남성",
+                                                                            style: TextStyle(
+                                                                              color: Color(0xff494846),
+                                                                            )
+                                                                        ),
+                                                                        color: Colors.white,
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(16),
+                                                                            side: BorderSide(color: genderCode == 1 ? Color(0xff6D00B0) : Color(0xffE4E5E7), width: 1)
+                                                                        ),
+                                                                        onPressed: () => {
+                                                                          setState(() {
+                                                                            genderCode = 1;
+                                                                            gender.text = "남성";
+                                                                            genderComleted = true;
+                                                                            Navigator.pop(context);
+                                                                          })
+                                                                        }
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(width: 15),
+                                                                  ButtonTheme(
+                                                                    minWidth: 48,
+                                                                    height: 34,
+                                                                    child: RaisedButton(
+                                                                        child: Text("여성",
+                                                                            style: TextStyle(
+                                                                              color: Color(0xff494846),
+                                                                            )
+                                                                        ),
+                                                                        color: Colors.white,
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(16),
+                                                                            side: BorderSide(color: genderCode == 2 ? Color(0xff6D00B0) : Color(0xffE4E5E7), width: 1)
+                                                                        ),
+                                                                        onPressed: () => {
+                                                                          setState(() {
+                                                                            genderCode = 2;
+                                                                            gender.text = "여성";
+                                                                            genderComleted = true;
+                                                                            Navigator.pop(context);
+                                                                          })
+                                                                        }
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(width: 15),
+                                                                  ButtonTheme(
+                                                                    minWidth: 83,
+                                                                    height: 34,
+                                                                    child: RaisedButton(
+                                                                        child: Text("논바이너리",
+                                                                            style: TextStyle(
+                                                                              color: Color(0xff494846),
+                                                                            )
+                                                                        ),
+                                                                        color: Colors.white,
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(16),
+                                                                            side: BorderSide(color: genderCode == 3 ? Color(0xff6D00B0) : Color(0xffE4E5E7), width: 1)
+                                                                        ),
+                                                                        onPressed: () => {
+                                                                          setState(() {
+                                                                            genderCode = 3;
+                                                                            gender.text = "논바이너리";
+                                                                            genderComleted = true;
+                                                                            Navigator.pop(context);
+                                                                          })
+                                                                        }
+                                                                    ),
+                                                                  ),
+                                                                ])
+                                                              ),
                                                             ]),
                                                           )
                                                       );
@@ -122,23 +201,84 @@ class _JoinEmail4State extends State<JoinEmail4> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(bottom: 35),
-                                  color: Color(0xffF4F4F4),
-                                  child: Column(children: [
-                                    TextField(
-                                      focusNode: birthDtFocusNode,
-                                      decoration: InputDecoration(
-                                          hintText: "연락처를 입력해주세요('-'제외)",
+                                    color: Color(0xffF4F4F4),
+                                    child: Column(children: [
+                                      TextField(
+                                        readOnly: true,
+                                        decoration: InputDecoration(
+                                          hintText: "생년월일을 선택해주세요",
                                           suffixIcon: IconButton(
                                               onPressed: () {
-                                                birthDt.clear();
-                                                },
-                                              icon: Icon(Icons.cancel, color: Colors.grey)
-                                          )
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    isScrollControlled: false,
+                                                    builder: (context) {
+                                                      return SingleChildScrollView(
+                                                          child: Container(
+                                                            height: 402,
+                                                            padding: EdgeInsets.only(
+                                                              top: 20,
+                                                                bottom: MediaQuery.of(context).viewInsets.bottom,
+                                                              left: 16, right: 16
+                                                            ),
+                                                            child: Column(
+                                                              children: [
+                                                                ScrollDatePicker(
+                                                                  height: 280,
+                                                                  controller: controller,
+                                                                  locale: DatePickerLocale.ko_kr,
+                                                                  pickerDecoration: BoxDecoration(
+                                                                      border: Border.all(color: Colors.blueAccent, width: 2.0)),
+                                                                  config: DatePickerConfig(
+                                                                      isLoop: false,
+                                                                      selectedTextStyle: TextStyle(
+                                                                          fontWeight: FontWeight.w600,
+                                                                          color: Colors.black,
+                                                                          fontSize: 20.0)),
+                                                                  onChanged: (value) {
+                                                                    setState(() {
+                                                                      _selectedDate = value;
+                                                                    });
+                                                                  },
+                                                                ),
+                                                                Row(children: [
+                                                                  Expanded(
+                                                                    child: Container(
+                                                                      child: RaisedButton(
+                                                                          child: const Text("선택완료",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                              )),
+                                                                          color: Color(0xff6D00B0),
+                                                                              // ?
+                                                                              // : Color(0xffC192DE),
+                                                                          shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(10.0),
+                                                                          ),
+                                                                          onPressed: () => {
+                                                                            setState(() {
+                                                                              birthDt.text = DateFormat("yyyy.MM.dd").format(_selectedDate);
+                                                                              birthDtCompleted = true;
+                                                                              Navigator.pop(context);
+                                                                            })
+                                                                          }
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                ])
+                                                              ]
+                                                            )
+                                                          )
+                                                      );
+                                                    }
+                                                );
+                                              },
+                                              icon: Icon(Icons.expand_more, color: Colors.grey)
+                                          ),
+                                        ),
+                                        controller: birthDt,
                                       ),
-                                      controller: birthDt,
-                                    ),
-                                  ])
+                                    ])
                                 ),
                                 Row(children: [
                                   Expanded(
@@ -148,7 +288,7 @@ class _JoinEmail4State extends State<JoinEmail4> {
                                             style: TextStyle(
                                               color: Colors.white,
                                             )),
-                                        color: btnActive
+                                        color: (genderComleted && birthDtCompleted)
                                             ? const Color(0xff6D00B0)
                                             : const Color(0xffC192DE),
                                         shape: RoundedRectangleBorder(
@@ -158,7 +298,7 @@ class _JoinEmail4State extends State<JoinEmail4> {
                                           setState(() {
                                             // Navigator.push(
                                             //   context,
-                                            //   MaterialPageRoute(builder: (context) => JoinEmail4()),
+                                            //   MaterialPageRoute(builder: (context) => JoinEmail5()),
                                             // );
                                           })
                                         }

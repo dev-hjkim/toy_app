@@ -61,7 +61,7 @@ class _JoinEmail3State extends State<JoinEmail3> {
       if (!phoneFocusNode.hasFocus) {
         setState(() {
           phoneValid = RegExp(
-              r"(^(?:[+0]9)?[0-9]{10,12}$)"
+              r"^01[0-9]{8,9}"
           ).hasMatch(phone.text);
           if (!phoneValid) {
             phoneValid = false;
@@ -182,7 +182,7 @@ class _JoinEmail3State extends State<JoinEmail3> {
     data = await httpUtil.validateNickname(nickname);
     setState(() {
       data = data;
-      nicknameValid = data["success"];
+      nicknameValid = !data["success"];
     });
   }
 }
