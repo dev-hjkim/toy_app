@@ -230,7 +230,7 @@ class _JoinEmail4State extends State<JoinEmail4> {
                                                                   pickerDecoration: BoxDecoration(
                                                                       border: Border.all(color: Colors.blueAccent, width: 2.0)),
                                                                   config: DatePickerConfig(
-                                                                      isLoop: false,
+                                                                      isLoop: true,
                                                                       selectedTextStyle: TextStyle(
                                                                           fontWeight: FontWeight.w600,
                                                                           color: Colors.black,
