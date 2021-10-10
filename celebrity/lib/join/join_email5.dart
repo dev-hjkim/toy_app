@@ -25,8 +25,9 @@ class _JoinEmail5State extends State<JoinEmail5> {
   String messageRe = "";
 
   bool _ischeckedAll = false;
+  bool _ischecked = false;
 
-  late List<bool> _checked_box;
+  late List<int> _checkedList;
 
   @override
   void initState() {
@@ -38,15 +39,18 @@ class _JoinEmail5State extends State<JoinEmail5> {
     _passwordReVisible = false;
 
     _ischeckedAll = false;
+    _ischecked = false;
+
+    _checkedList = <int>[];
 
     passwordFocusNode = new FocusNode();
     passwordFocusNode.addListener(() {
       if (!passwordFocusNode.hasFocus) {
         setState(() {
           passwordValid = RegExp(
-              r"^01[0-9]{8,9}"
+              r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?~^<>,.-_&+=])[A-Za-z\d$@$!%*#?~^<>,.-_&+=]{10,40}$'
           ).hasMatch(password.text);
-          if (!passwordValid || password.text.length < 10) {
+          if (!passwordValid) {
             message = "영문+숫자+특수기호 10글자 이상이어야 해요🙌";
           } else {
             message = "안전해요✨";
@@ -62,6 +66,8 @@ class _JoinEmail5State extends State<JoinEmail5> {
           passwordReValid = (password.text == passwordRe.text);
           if (!passwordReValid) {
             messageRe = "앗! 다르게 입력하신 것 같아요👋";
+          } else {
+            messageRe = "";
           }
         });
       }
@@ -121,7 +127,7 @@ class _JoinEmail5State extends State<JoinEmail5> {
                                   alignment: Alignment.centerLeft,
                                   child: Container(
                                     margin: EdgeInsets.only(top: 8.44, bottom: 12.56),
-                                    child: Text(message ?? "",
+                                    child: Text(message,
                                           style: TextStyle(color: Color(0xff6D00B0))),
                                   ),
                                 ),
@@ -154,7 +160,7 @@ class _JoinEmail5State extends State<JoinEmail5> {
                                   alignment: Alignment.centerLeft,
                                   child: Container(
                                     margin: EdgeInsets.only(top: 8.44, bottom: 12.56),
-                                    child: Text(messageRe ?? "",
+                                    child: Text(messageRe,
                                         style: TextStyle(color: Color(0xff6D00B0))),
                                   ),
                                 ),
@@ -202,7 +208,12 @@ class _JoinEmail5State extends State<JoinEmail5> {
                                                                 value: _ischeckedAll,
                                                                 onChanged: (value) {
                                                                   setState(() {
-                                                                    _ischeckedAll = value!;
+                                                                    _checkedList.clear();
+                                                                    if (_ischeckedAll) {
+                                                                      for(int i=0; i<3; i++) {
+                                                                        _checkedList.add(i);
+                                                                      }
+                                                                    }
                                                                   });
                                                                 }
                                                             ),
@@ -213,13 +224,117 @@ class _JoinEmail5State extends State<JoinEmail5> {
                                                                   color: Color(0xff6A00AB),
                                                                 ),
                                                               ),
-                                                            )
+                                                            ),
                                                           ],
                                                         )
+                                                      ),
+                                                      Container(
+                                                          height: 40,
+                                                          child: Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  value: _checkedList.contains(0),
+                                                                  onChanged: (value) {
+                                                                    setState(() {
+                                                                      if(_checkedList.contains(0)) _checkedList.remove(0);
+                                                                      else _checkedList.add(0);
+                                                                    });
+                                                                  }
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.only(left: 9),
+                                                                child: Text("이용약관(필수)"),
+                                                              ),
+                                                              Padding(
+                                                                  padding: EdgeInsets.only(right: 36),
+                                                                  child: IconButton(
+                                                                      onPressed: () {},
+                                                                      icon: Icon(Icons.arrow_forward_ios)
+                                                                  )
+                                                              )
+                                                            ],
+                                                          )
+                                                      ),
+                                                      Container(
+                                                          height: 40,
+                                                          child: Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  value: _checkedList.contains(1),
+                                                                  onChanged: (value) {
+                                                                    setState(() {
+                                                                      if(_checkedList.contains(1)) _checkedList.remove(1);
+                                                                      else _checkedList.add(1);
+                                                                    });
+                                                                  }
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.only(left: 9),
+                                                                child: Text("개인정보 수집 및 이용(필수)"),
+                                                              ),
+                                                              Padding(
+                                                                  padding: EdgeInsets.only(right: 36),
+                                                                  child: IconButton(
+                                                                      onPressed: () {},
+                                                                      icon: Icon(Icons.arrow_forward_ios)
+                                                                  )
+                                                              )
+                                                            ],
+                                                          )
+                                                      ),
+                                                      Container(
+                                                          height: 40,
+                                                          child: Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  value: _checkedList.contains(2),
+                                                                  onChanged: (value) {
+                                                                    setState(() {
+                                                                      if(_checkedList.contains(2)) _checkedList.remove(2);
+                                                                      else _checkedList.add(2);
+                                                                    });
+                                                                  }
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.only(left: 9),
+                                                                child: Text("마케팅 정보 수신(선택)"),
+                                                              ),
+                                                              Padding(
+                                                                  padding: EdgeInsets.only(right: 36),
+                                                                  child: IconButton(
+                                                                      onPressed: () {},
+                                                                      icon: Icon(Icons.arrow_forward_ios)
+                                                                  )
+                                                              )
+                                                            ],
+                                                          )
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.only(top: 27),
+                                                        child: Row(children: [
+                                                          Expanded(
+                                                            child: Container(
+                                                              child: RaisedButton(
+                                                                  child: const Text("가입완료",
+                                                                      style: TextStyle(
+                                                                        color: Colors.white,
+                                                                      )),
+                                                                  color: (_checkedList.contains(0) && _checkedList.contains(1))
+                                                                      ? Color(0xff6D00B0)
+                                                                      : Color(0xffC192DE),
+                                                                  shape: RoundedRectangleBorder(
+                                                                    borderRadius: BorderRadius.circular(10.0),
+                                                                  ),
+                                                                  onPressed: () => { }
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ])
                                                       )
                                                     ]
                                                   )
-                                                )
+                                                ),
+
                                               );
                                             }
                                           )
