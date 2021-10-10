@@ -3,6 +3,8 @@ import "../utils/http_util.dart";
 import 'package:scroll_date_picker/scroll_date_picker.dart';
 import 'package:intl/intl.dart';
 
+import 'join_email5.dart';
+
 class JoinEmail4 extends StatefulWidget {
   const JoinEmail4({Key? key}) : super(key: key);
 
@@ -87,6 +89,12 @@ class _JoinEmail4State extends State<JoinEmail4> {
                                                       print(MediaQuery.of(context).viewInsets.bottom);
                                                       return SingleChildScrollView(
                                                           child: Container(
+                                                            decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.only(
+                                                                    topLeft: Radius.circular(10),
+                                                                  topRight: Radius.circular(10),
+                                                                )
+                                                            ),
                                                             height: 543,
                                                             padding: EdgeInsets.only(
                                                                 bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -215,6 +223,12 @@ class _JoinEmail4State extends State<JoinEmail4> {
                                                     builder: (context) {
                                                       return SingleChildScrollView(
                                                           child: Container(
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.only(
+                                                                    topLeft: Radius.circular(10),
+                                                                    topRight: Radius.circular(10),
+                                                                  )
+                                                              ),
                                                             height: 402,
                                                             padding: EdgeInsets.only(
                                                               top: 20,
@@ -296,10 +310,10 @@ class _JoinEmail4State extends State<JoinEmail4> {
                                         ),
                                         onPressed: () => {
                                           setState(() {
-                                            // Navigator.push(
-                                            //   context,
-                                            //   MaterialPageRoute(builder: (context) => JoinEmail5()),
-                                            // );
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => JoinEmail5()),
+                                            );
                                           })
                                         }
                                       ),
