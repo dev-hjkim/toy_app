@@ -67,4 +67,88 @@ class HttpUtil {
       return {};
     }
   }
+
+  Future<Map<String, dynamic>> login(String id, String pwd) async {
+    final String validateCode = urlBase + "/login";
+
+    Map<String, String> resBody = {"username": id, "password": pwd};
+
+    http.Response result = await http.post(
+      Uri.parse(validateCode),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: jsonEncode(resBody),
+    );
+
+    if (result.statusCode == HttpStatus.ok) {
+      final jsonResponse = json.decode(utf8.decode(result.bodyBytes));
+      return jsonResponse;
+    } else {
+      return {};
+    }
+  }
+
+  Future<Map<String, dynamic>> findId(String phone) async {
+    final String validateCode = urlBase + "/find/id";
+
+    Map<String, String> resBody = {"phone": phone};
+
+    http.Response result = await http.post(
+      Uri.parse(validateCode),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: jsonEncode(resBody),
+    );
+
+    if (result.statusCode == HttpStatus.ok) {
+      final jsonResponse = json.decode(utf8.decode(result.bodyBytes));
+      return jsonResponse;
+    } else {
+      return {};
+    }
+  }
+
+  Future<Map<String, dynamic>> findPw(String id, String phone) async {
+    final String validateCode = urlBase + "/find/pw";
+
+    Map<String, String> resBody = {"username": id, "phone": phone};
+
+    http.Response result = await http.post(
+      Uri.parse(validateCode),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: jsonEncode(resBody),
+    );
+
+    if (result.statusCode == HttpStatus.ok) {
+      final jsonResponse = json.decode(utf8.decode(result.bodyBytes));
+      return jsonResponse;
+    } else {
+      return {};
+    }
+  }
+
+  Future<Map<String, dynamic>> modPw(String id, String pwd) async {
+    final String validateCode = urlBase + "/mod/pw";
+
+    Map<String, String> resBody = {"username": id, "password": pwd};
+
+    http.Response result = await http.post(
+      Uri.parse(validateCode),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: jsonEncode(resBody),
+    );
+
+    if (result.statusCode == HttpStatus.ok) {
+      final jsonResponse = json.decode(utf8.decode(result.bodyBytes));
+      return jsonResponse;
+    } else {
+      return {};
+    }
+  }
 }
