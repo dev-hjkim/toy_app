@@ -167,6 +167,7 @@ class _JoinEmail5State extends State<JoinEmail5> {
                                 Row(children: [
                                   Expanded(
                                     child: Container(
+                                      height: 40,
                                       child: RaisedButton(
                                         child: const Text("다음",
                                             style: TextStyle(
@@ -314,6 +315,7 @@ class _JoinEmail5State extends State<JoinEmail5> {
                                                         child: Row(children: [
                                                           Expanded(
                                                             child: Container(
+                                                              height: 40,
                                                               child: RaisedButton(
                                                                   child: const Text("가입완료",
                                                                       style: TextStyle(

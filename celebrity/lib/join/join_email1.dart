@@ -8,62 +8,95 @@ class JoinEmail1 extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Scaffold(
+          backgroundColor: Color(0xff6D00B0),
             body: Builder(
                 builder: (context) => SingleChildScrollView(
                     child: Padding(
-                        padding: EdgeInsets.only(top: constraints.maxHeight/3),
+                        padding: EdgeInsets.only(top: 53, left: 16, right: 16),
                         child: Center(
                             child: Column(children: [
+                              const Text(
+                                "fashion cookbook",
+                                style: TextStyle(
+                                  color: Color(0xffCEB3DE),
+                                  fontSize: 15,
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
                               const Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: Text(
-                                    "당신, 스스로 빛을 내고 있군요!",
+                                padding: EdgeInsets.only(top: 224),
+                                child: Text(
+                                    "Celebrity",
                                     style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
+                                      color: Colors.white,
+                                      fontSize: 47,
+                                      fontFamily: 'Nunito',
+                                      fontWeight: FontWeight.w700,
+                                    )
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 13),
+                                child: Text(
+                                    "당신, 스스로 빛을 내고 있군요.",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    )
+                                ),
                               ),
                               Padding(
-                                  padding: EdgeInsets.all(0),
-                                  child: RaisedButton(
-                                    child: const Text(
-                                        "이메일로 가입하기",
-                                        style: TextStyle(
-                                            color: Colors.white
-                                        )
-                                    ),
-                                    color: Color(0xff6D00B0),
-                                    onPressed: () => {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => JoinEmail2()),
-                                      )
-                                    },
-                                  )
+                                  padding: EdgeInsets.only(top: 254),
+                                  child: Row(children: [
+                                    Expanded(
+                                      child: Container(
+                                        height: 40,
+                                        child: RaisedButton(
+                                            child: const Text("가입하기",
+                                                style: TextStyle(
+                                                  color: Color(0xff6A00AB),
+                                                )),
+                                            color: const Color(0xffE9E0F6),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            onPressed: () => {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => JoinEmail2()),
+                                              )
+                                            }
+                                        ),
+                                      ),
+                                    )
+                                  ]),
                               ),
                               Padding(
-                                  padding: EdgeInsets.all(13.7),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => Login()),
-                                      );
-                                    },
-                                    child: Text(
-                                      "로그인",
-                                      style: TextStyle(
-                                        color: Color(0xff6D00B0),
+                                padding: EdgeInsets.only(top: 13),
+                                child: Row(children: [
+                                  Expanded(
+                                    child: Container(
+                                      height: 40,
+                                      child: RaisedButton(
+                                          child: const Text("로그인",
+                                              style: TextStyle(
+                                                color: Color(0xffFFFFFF),
+                                              )),
+                                          color: const Color(0xffB586D2),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          onPressed: () => {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => Login()),
+                                            )
+                                          }
                                       ),
                                     ),
-                                  ),
-                              ),
-                              const Padding(
-                                  padding: EdgeInsets.all(13),
-                                  child: Text(
-                                      "아이디 찾기 | 비밀번호 찾기"
                                   )
+                                ]),
                               ),
                             ])
                         )

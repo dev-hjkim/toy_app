@@ -90,7 +90,7 @@ class _FindPw1State extends State<FindPw1> {
                               ])
                           ),
                           Container(
-                              margin: EdgeInsets.only(bottom: 35),
+                              margin: EdgeInsets.only(top: 35, bottom: 35),
                               color: Color(0xffF4F4F4),
                               child: Column(children: [
                                 TextField(
@@ -111,6 +111,7 @@ class _FindPw1State extends State<FindPw1> {
                           Row(children: [
                             Expanded(
                               child: Container(
+                                height: 40,
                                 child: RaisedButton(
                                     child: const Text("다음",
                                         style: TextStyle(

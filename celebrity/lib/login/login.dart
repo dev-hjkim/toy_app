@@ -1,3 +1,5 @@
+import 'package:celebrity/findId/find_id1.dart';
+import 'package:celebrity/findPw/find_pw1.dart';
 import 'package:celebrity/utils/http_util.dart';
 import "package:flutter/material.dart";
 
@@ -119,6 +121,7 @@ class _LoginState extends State<Login> {
                           Row(children: [
                             Expanded(
                               child: Container(
+                                height: 40,
                                 child: RaisedButton(
                                     child: const Text("로그인",
                                         style: TextStyle(
@@ -134,7 +137,7 @@ class _LoginState extends State<Login> {
                                       setState(() {
                                         // Navigator.push(
                                         //   context,
-                                        //   MaterialPageRoute(builder: (context) => JoinEmail4()),
+                                        //   MaterialPageRoute(builder: (context) => 메인화면()),
                                         // );
                                       })
                                     }
@@ -142,6 +145,35 @@ class _LoginState extends State<Login> {
                               ),
                             )
                           ]),
+                          Container(
+                            margin: EdgeInsets.only(top: 23),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(right: 24),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => FindId1()),
+                                      );
+                                    },
+                                    child: new Text("아이디 찾기"),
+                                  )
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => FindPw1()),
+                                    );
+                                  },
+                                  child: new Text("비밀번호 찾기"),
+                                )
+                              ],
+                            )
+                          )
                         ])
                     )
                   ])

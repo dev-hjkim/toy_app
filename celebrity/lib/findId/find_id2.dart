@@ -50,6 +50,7 @@ class _FindId2State extends State<FindId2> {
                             Row(children: [
                               Expanded(
                                 child: Container(
+                                  height: 40,
                                   child: RaisedButton(
                                       child: const Text("로그인하러 가기",
                                           style: TextStyle(

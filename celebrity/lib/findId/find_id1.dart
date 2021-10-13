@@ -96,6 +96,7 @@ class _FindId1State extends State<FindId1> {
                             Row(children: [
                               Expanded(
                                 child: Container(
+                                  height: 40,
                                   child: RaisedButton(
                                       child: const Text("아이디 찾기",
                                           style: TextStyle(

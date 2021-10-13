@@ -165,6 +165,7 @@ class _FindPw2State extends State<FindPw2> {
                                 Row(children: [
                                   Expanded(
                                     child: Container(
+                                      height: 40,
                                       child: RaisedButton(
                                         child: const Text("변경완료",
                                             style: TextStyle(
